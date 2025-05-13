@@ -1,4 +1,4 @@
-modules = ["rust", "nodejs-20"]
+modules = ["rust", "nodejs-20", "postgresql-16"]
 
 [nix]
 channel = "stable-24_05"
@@ -14,20 +14,7 @@ author = "agent"
 
 [[workflows.workflow.tasks]]
 task = "workflow.run"
-args = "Frontend Server"
-
-[[workflows.workflow.tasks]]
-task = "workflow.run"
 args = "React Frontend Server"
-
-[[workflows.workflow]]
-name = "Frontend Server"
-author = "agent"
-
-[[workflows.workflow.tasks]]
-task = "shell.exec"
-args = "cd frontend && flutter pub get && flutter run -d web-server --web-port=5000 --web-hostname=0.0.0.0"
-waitForPort = 5000
 
 [[workflows.workflow]]
 name = "React Frontend Server"

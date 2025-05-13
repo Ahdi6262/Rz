@@ -2,6 +2,7 @@ mod db;
 mod middleware;
 mod models;
 mod routes;
+mod search;
 
 use actix_cors::Cors;
 use actix_web::{http, middleware::Logger, web, App, HttpServer};
@@ -11,6 +12,7 @@ use std::env;
 
 use crate::db::{mongodb::init_mongodb, postgres::init_postgres};
 use crate::routes::{admin, auth, blog, courses, portfolio};
+use crate::search::{SearchState, initialize_search_indices, search_courses, search_portfolio, search_blog, search_all};
 
 #[actix_web::main]
 async fn main() -> std::io::Result<()> {
@@ -27,6 +29,14 @@ async fn main() -> std::io::Result<()> {
         pg_pool: pg_pool.clone(),
         mongo_client: mongo_client.clone(),
     });
+    
+    // Initialize search state
+    let search_state = web::Data::new(SearchState::new());
+    
+    // Initialize search indices
+    initialize_search_indices(&app_data, &search_state)
+        .await
+        .expect("Failed to initialize search indices");
 
     info!("Starting HTTP server at http://0.0.0.0:8000");
 
@@ -43,6 +53,7 @@ async fn main() -> std::io::Result<()> {
             .wrap(cors)
             .wrap(Logger::default())
             .app_data(app_data.clone())
+            .app_data(search_state.clone())
             // Auth routes
             .service(
                 web::scope("/api/auth")
@@ -91,6 +102,14 @@ async fn main() -> std::io::Result<()> {
                     .route("/users/{id}", web::put().to(admin::update_user))
                     .route("/users/{id}", web::delete().to(admin::delete_user))
                     .route("/stats", web::get().to(admin::get_stats)),
+            )
+            // Search routes
+            .service(
+                web::scope("/api/search")
+                    .route("/courses", web::post().to(search_courses))
+                    .route("/portfolio", web::post().to(search_portfolio))
+                    .route("/blog", web::post().to(search_blog))
+                    .route("/all", web::post().to(search_all)),
             )
     })
     .bind(("0.0.0.0", 8000))?
