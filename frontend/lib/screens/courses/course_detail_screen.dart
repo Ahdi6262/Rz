@@ -6,7 +6,6 @@ import 'package:hex_the_add_hub/constants/theme.dart';
 import 'package:hex_the_add_hub/models/course.dart';
 import 'package:hex_the_add_hub/providers/course_provider.dart';
 import 'package:video_player/video_player.dart';
-import 'package:chewie/chewie.dart';
 
 class CourseDetailScreen extends ConsumerStatefulWidget {
   final String courseId;
@@ -22,7 +21,6 @@ class CourseDetailScreen extends ConsumerStatefulWidget {
 
 class _CourseDetailScreenState extends ConsumerState<CourseDetailScreen> {
   VideoPlayerController? _videoController;
-  ChewieController? _chewieController;
   String? _selectedLessonId;
   CourseLesson? _selectedLesson;
   bool _isEnrolling = false;
@@ -39,7 +37,6 @@ class _CourseDetailScreenState extends ConsumerState<CourseDetailScreen> {
   @override
   void dispose() {
     _videoController?.dispose();
-    _chewieController?.dispose();
     super.dispose();
   }
   
@@ -55,21 +52,6 @@ class _CourseDetailScreenState extends ConsumerState<CourseDetailScreen> {
     // Initialize new controllers
     _videoController = VideoPlayerController.network(videoUrl);
     _videoController!.initialize().then((_) {
-      _chewieController = ChewieController(
-        videoPlayerController: _videoController!,
-        autoPlay: true,
-        looping: false,
-        aspectRatio: 16 / 9,
-        errorBuilder: (context, errorMessage) {
-          return Center(
-            child: Text(
-              'Error: $errorMessage',
-              style: const TextStyle(color: Colors.white),
-            ),
-          );
-        },
-      );
-      
       if (mounted) {
         setState(() {});
       }
@@ -77,9 +59,7 @@ class _CourseDetailScreenState extends ConsumerState<CourseDetailScreen> {
   }
   
   void _disposeVideo() {
-    _chewieController?.dispose();
     _videoController?.dispose();
-    _chewieController = null;
     _videoController = null;
   }
   

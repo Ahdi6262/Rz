@@ -160,8 +160,8 @@ class SolanaService {
     try {
       // Get token accounts
       final response = await _client.rpcClient.getTokenAccountsByOwner(
-        owner: publicKey,
-        programId: 'TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA', // Token program ID
+        publicKey,
+        'TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA', // Token program ID
       );
       
       if (response.value.isEmpty) {

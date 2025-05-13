@@ -22,7 +22,8 @@ dependencies:
   flutter_svg: ^2.0.7
   cached_network_image: ^3.2.3
   video_player: ^2.6.1
-  chewie: ^1.5.0
+  # Disabled due to compatibility issues
+  # chewie: ^1.5.0
   path: ^1.8.3
   uuid: ^3.0.7
   image_picker: ^1.0.0
