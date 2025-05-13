@@ -3,21 +3,34 @@ use serde::{Deserialize, Serialize};
 use std::collections::HashMap;
 use std::sync::Mutex;
 use crate::AppState;
-use super::algorithms::{InvertedIndex, SearchDocument, SearchResult};
+use super::algorithms::{InvertedIndex, SearchDocument, SearchResult as BasicSearchResult};
+use super::advanced_algorithm::{ThreadSafeSearchEngine, Document, SearchResult as AdvancedSearchResult, TextHighlight};
 
 // Shared state for the search index
 pub struct SearchState {
+    // Basic search indices
     pub courses_index: Mutex<InvertedIndex>,
     pub portfolio_index: Mutex<InvertedIndex>,
     pub blog_index: Mutex<InvertedIndex>,
+    
+    // Advanced search engines
+    pub advanced_courses_engine: ThreadSafeSearchEngine,
+    pub advanced_portfolio_engine: ThreadSafeSearchEngine,
+    pub advanced_blog_engine: ThreadSafeSearchEngine,
 }
 
 impl SearchState {
     pub fn new() -> Self {
         SearchState {
+            // Basic search indices
             courses_index: Mutex::new(InvertedIndex::new()),
             portfolio_index: Mutex::new(InvertedIndex::new()),
             blog_index: Mutex::new(InvertedIndex::new()),
+            
+            // Advanced search engines
+            advanced_courses_engine: ThreadSafeSearchEngine::new(),
+            advanced_portfolio_engine: ThreadSafeSearchEngine::new(),
+            advanced_blog_engine: ThreadSafeSearchEngine::new(),
         }
     }
 }
