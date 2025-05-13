@@ -1,9 +1,13 @@
 import 'package:dio/dio.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:hex_the_add_hub/models/blog_post.dart';
 import 'package:hex_the_add_hub/models/course.dart';
 import 'package:hex_the_add_hub/models/portfolio_item.dart';
 import 'package:hex_the_add_hub/models/user.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+
+// Provider for ApiService
+final apiServiceProvider = Provider<ApiService>((ref) => ApiService());
 
 class ApiService {
   final Dio _dio = Dio();

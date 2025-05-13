@@ -1,4 +1,5 @@
-import 'package:firebase_core/firebase_core.dart';
+// Temporarily disabled Firebase due to web compatibility issues
+// import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -10,16 +11,8 @@ Future<void> main() async {
   // Load environment variables
   await dotenv.load(fileName: ".env");
 
-  // Initialize Firebase
-  try {
-    await Firebase.initializeApp(
-      // You can add Firebase options here if needed
-      // options: DefaultFirebaseOptions.currentPlatform,
-    );
-    debugPrint("Firebase initialized successfully");
-  } catch (e) {
-    debugPrint("Failed to initialize Firebase: $e");
-  }
+  // Temporarily disabled Firebase initialization due to web compatibility issues
+  debugPrint("Firebase initialization skipped temporarily");
 
   runApp(
     // Wrap the app with ProviderScope for state management

@@ -351,13 +351,46 @@ class _CourseDetailScreenState extends ConsumerState<CourseDetailScreen> {
           const SizedBox(height: 16),
           
           // Video player (if available)
-          if (_selectedLesson!.videoUrl != null && _chewieController != null)
+          if (_selectedLesson!.videoUrl != null && _videoController != null && _videoController!.value.isInitialized)
             FadeInRight(
               duration: const Duration(milliseconds: 500),
               delay: const Duration(milliseconds: 100),
               child: AspectRatio(
                 aspectRatio: 16 / 9,
-                child: Chewie(controller: _chewieController!),
+                child: Stack(
+                  alignment: Alignment.bottomCenter,
+                  children: [
+                    VideoPlayer(_videoController!),
+                    VideoProgressIndicator(_videoController!, allowScrubbing: true),
+                    Positioned.fill(
+                      child: GestureDetector(
+                        onTap: () {
+                          setState(() {
+                            _videoController!.value.isPlaying
+                                ? _videoController!.pause()
+                                : _videoController!.play();
+                          });
+                        },
+                        child: Center(
+                          child: _videoController!.value.isPlaying
+                              ? const SizedBox.shrink()
+                              : Container(
+                                  decoration: BoxDecoration(
+                                    color: Colors.black38,
+                                    borderRadius: BorderRadius.circular(30),
+                                  ),
+                                  padding: const EdgeInsets.all(12),
+                                  child: const Icon(
+                                    Icons.play_arrow,
+                                    color: Colors.white,
+                                    size: 40,
+                                  ),
+                                ),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
               ),
             ),
           
