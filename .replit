@@ -1,4 +1,4 @@
-modules = ["rust"]
+modules = ["rust", "nodejs-20"]
 
 [nix]
 channel = "stable-24_05"
@@ -16,6 +16,10 @@ author = "agent"
 task = "workflow.run"
 args = "Frontend Server"
 
+[[workflows.workflow.tasks]]
+task = "workflow.run"
+args = "React Frontend Server"
+
 [[workflows.workflow]]
 name = "Frontend Server"
 author = "agent"
@@ -23,6 +27,15 @@ author = "agent"
 [[workflows.workflow.tasks]]
 task = "shell.exec"
 args = "cd frontend && flutter pub get && flutter run -d web-server --web-port=5000 --web-hostname=0.0.0.0"
+waitForPort = 5000
+
+[[workflows.workflow]]
+name = "React Frontend Server"
+author = "agent"
+
+[[workflows.workflow.tasks]]
+task = "shell.exec"
+args = "cd . && npx webpack serve --mode development --open --host 0.0.0.0 --port 5000"
 waitForPort = 5000
 
 [deployment]
