@@ -1,0 +1,49 @@
+name: hex_the_add_hub
+description: A cross-platform application integrating Flutter, Rust, and Solana technologies.
+publish_to: 'none'
+version: 1.0.0+1
+
+environment:
+  sdk: ">=3.0.0 <4.0.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+  cupertino_icons: ^1.0.5
+  firebase_core: ^2.14.0
+  firebase_auth: ^4.6.3
+  google_sign_in: ^6.1.4
+  flutter_riverpod: ^2.3.6
+  dio: ^5.2.1
+  shared_preferences: ^2.1.2
+  json_annotation: ^4.8.1
+  intl: ^0.18.1
+  url_launcher: ^6.1.12
+  flutter_svg: ^2.0.7
+  cached_network_image: ^3.2.3
+  video_player: ^2.6.1
+  chewie: ^1.5.0
+  path: ^1.8.3
+  uuid: ^3.0.7
+  image_picker: ^1.0.0
+  file_picker: ^5.3.2
+  connectivity_plus: ^4.0.1
+  flutter_dotenv: ^5.1.0
+  google_fonts: ^5.1.0
+  animate_do: ^3.0.2
+  solana: ^0.31.2+1
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^2.0.1
+  build_runner: ^2.4.6
+  json_serializable: ^6.7.0
+
+flutter:
+  uses-material-design: true
+  
+  assets:
+    - assets/images/
+    - assets/icons/
+    - .env
