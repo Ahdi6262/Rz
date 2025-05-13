@@ -10,9 +10,10 @@ dependencies:
   flutter:
     sdk: flutter
   cupertino_icons: ^1.0.5
-  firebase_core: ^2.14.0
-  firebase_auth: ^4.6.3
-  google_sign_in: ^6.1.4
+  # Temporarily disabled due to web compatibility issues
+  # firebase_core: ^2.14.0
+  # firebase_auth: ^4.6.3
+  # google_sign_in: ^6.1.4
   flutter_riverpod: ^2.3.6
   dio: ^5.2.1
   shared_preferences: ^2.1.2
